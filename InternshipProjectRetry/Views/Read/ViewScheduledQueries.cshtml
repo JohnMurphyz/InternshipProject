@@ -1,0 +1,100 @@
+﻿@model IEnumerable<DataLibrary.Models.ScheduledQueryModel>
+
+@{
+    ViewBag.Title = "ViewScheduledQueries";
+}
+
+
+<style>
+
+    html {
+        height: 100%;
+    }
+
+    body {
+        height: 100%;
+        background-image: linear-gradient(140deg, #9d2c9e 0%, #f68084 100%);
+    }
+
+    .scheduleBox {
+        min-height: 15%;
+    }
+
+    .inputs {
+        padding-bottom: 20px;
+        padding-top: 20px;
+        border-radius: 25px 25px 3px 3px;
+    }
+
+    .schedulePage {
+        max-width: 92.5%;
+    }
+
+    .top {
+        z-index: 1;
+    }
+    
+</style>
+
+<div class="">
+
+    <div class="bg-white p-3 mx-5  rounded-3 shadow-lg">
+        <table class=" schedulePage  table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Query)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ScheduledTime)
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Query)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ScheduledTime)
+                    </td>
+
+                </tr>
+            }
+
+        </table>
+    </div>
+
+    @*this is gonna be a similar method as in the other thing*@
+
+    @using (Html.BeginForm("ScheduleNewQuery", "Query", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="scheduleBox pb-3 top px-auto pt-4">
+
+            <h3 class="p-1 text-white text-center">Would you like to schedule a new query?</h3>
+
+            <div class="row px-5 mx-5 bg-light inputs text-center">
+
+                <div class="col float-end ps-5 ms-5 ">
+                    <p class="lead">Enter Fields</p>
+                    <input type="text" name="query" />
+                </div>
+
+                <div class="col ">
+                    <p class="lead">Enter Date</p>
+                    <input type="datetime-local" name="Date" />
+                </div>
+
+                <div class="col float-lg-start pe-5 me-5">
+                    <input type="submit" value="Schedule" class="btn text-center mt-4 pt-2" style="background-color: #9d2c9e; color: white">
+                </div>
+            </div>
+
+        </div>
+
+    }
+
+</div>

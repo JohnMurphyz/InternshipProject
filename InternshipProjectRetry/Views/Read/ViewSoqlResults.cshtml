@@ -1,0 +1,58 @@
+﻿@model IEnumerable<DataLibrary.Models.QueryModel>
+
+@{
+    ViewBag.Title = "ViewSoqlResults";
+}
+
+
+<style>
+
+    html {
+        height: 100%;
+    }
+
+    body {
+        height: 100%;
+        background-image: linear-gradient(140deg, #9d2c9e 0%, #f68084 100%);
+    }
+</style>
+
+<h2>ViewSoqlResults</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FieldName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FieldValue)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FieldName)
+            </td>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.FieldValue)
+
+            </td>
+
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }
+
+</table>

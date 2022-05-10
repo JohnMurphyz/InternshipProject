@@ -1,0 +1,89 @@
+﻿@model InternshipProjectRetry.Models.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<style>
+    .loginPage {
+        align-items: center;
+        margin: auto;
+    }
+
+    .form-signin {
+        width: 100%;
+        padding: 15px;
+        margin: auto;
+    }
+
+    .box {
+        min-width: 200px;
+        max-width: 30%;
+    }
+</style>
+
+
+@{
+    ViewBag.Message = "";
+}
+
+<div class="loginPage row box">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-signin rounded container-fluid shadow-sm p-5 text-center">
+
+            <img class="me-3" src="~/Content/Images/Salesforceicon.png" alt="" width="100" height="100">
+
+
+            <h4>Please Sign In</h4>
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+            <div class="form-group pt-1">
+                @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label" })
+                <div class="pt-1">
+                    @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+            <div class="form-group pt-1">
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
+                <div class="pt-1">
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+            <div class="form-group pt-1">
+                @Html.LabelFor(model => model.Token, htmlAttributes: new { @class = "control-label" })
+                <div class="pt-1 pb-2">
+                    @Html.EditorFor(model => model.Token, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Token, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <div class="">
+                    <input type="submit" value="Sign in" class="btn btn-primary pt-2">
+                </div>
+            </div>
+        </div>
+    }
+
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

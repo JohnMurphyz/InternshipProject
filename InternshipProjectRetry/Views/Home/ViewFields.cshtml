@@ -1,0 +1,319 @@
+﻿
+@{
+    ViewBag.Title = "ViewAccounts";
+}
+
+
+<style>
+    .loginPage {
+
+    }
+
+    .soqlBox {
+
+        width: 500px;
+    }
+
+    .textBox {
+        width: 100%;
+    }
+
+    .form-signin {
+        padding: 15px;
+    }
+
+    .box {
+        width: 40%;
+        max-width: 60%;
+    }
+
+    .my-custom-scrollbar {
+        position: relative;
+        height: 300px;
+        overflow: auto;
+    }
+
+    .table-wrapper-scroll-y {
+        display: block;
+    }
+</style>
+
+
+
+
+<div class="container-fluid shadow-sm">
+    <div class="row text-center mx-auto justify-content-center align-items-center">
+
+
+
+
+
+        @*Fields Box*@
+
+
+        <div class="form-signin col-lg-auto rounded box  mx-3  text-center">
+
+            <img class="me-3" src="~/Content/Images/Salesforceicon.png" alt="" width="100" height="100">
+
+
+            <h5 class="pt-3">Available fields for:</h5>
+            <p class="lead ">@ViewBag.Message</p>
+
+
+            <div id="myDIV">
+                <div class="form-group pt-1 table-wrapper-scroll-y my-custom-scrollbar">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Field</th>
+                                <th scope="col">Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+
+                                <tr>
+                                    <td>@item.FieldName</td>
+                                    <td>@item.FieldType</td>
+                                </tr>
+
+                            }
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        @* Soql box *@
+
+    <div class="col-lg-auto">
+
+        <div class="soqlBox align-middle mt-5 mx-5">
+
+            @using (Html.BeginForm("UserQuery", "Home", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+
+                <form class="align-middle">
+
+                    <div class="mt-5 pt-3 ">
+                        <h5 class="text-center pb-2">SOQL box</h5>
+
+                        @Html.TextArea("Query", new { @class = "textBox text-center", @placeholder = "Write your Query here" })
+
+                        <div class=" text-center">
+                            <input type="submit" value="Execute" class="btn btn-primary text-center mt-2  pt-2">
+                        </div>
+                    </div>
+
+                </form>
+
+            }
+
+
+
+        </div>
+
+
+
+
+        @*Query Results Box*@
+
+
+
+        <div class="form-signin rounded  p-5 text-center">
+
+            @*  <img class="me-3" src="~/Content/Images/Salesforceicon.png" alt="" width="100" height="100">*@
+
+
+
+
+            <div class="form-group pt-1 table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col"> AccountID </th>
+                            <th scope="col">Name</th>
+
+                            <th scope="col"> Contact </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td> TBR </td>
+                            <td> TBR </td>
+                            <td> TBR </td>
+
+                        </tr>
+
+                        <tr>
+                            <td> TBR </td>
+                            <td> TBR </td>
+                            <td> TBR </td>
+
+                        </tr>
+                        <tr>
+                            <td> TBR </td>
+                            <td> TBR </td>
+                            <td> TBR </td>
+
+                        </tr>
+                        <tr>
+                            <td> TBR </td>
+                            <td> TBR </td>
+                            <td> TBR </td>
+
+                        </tr>
+                        <tr>
+                            <td> TBR </td>
+                            <td> TBR </td>
+                            <td> TBR </td>
+
+                        </tr>
+                        <tr>
+                            <td> TBR </td>
+                            <td> TBR </td>
+                            <td> TBR </td>
+
+                        </tr>
+                        <tr>
+                            <td> TBR </td>
+                            <td> TBR </td>
+                            <td> TBR </td>
+
+                        </tr>
+                        <tr>
+                            <td> TBR </td>
+                            <td> TBR </td>
+                            <td> TBR </td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+        </div>
+
+
+
+</div>
+
+<div class="form-signin rounded shadow-sm p-5 text-center">
+
+    @*  <img class="me-3" src="~/Content/Images/Salesforceicon.png" alt="" width="100" height="100">*@
+
+
+
+    <h5 class="text-center pb-2">Mapping box</h5>
+
+    <div class="form-group pt-1 table-wrapper-scroll-y my-custom-scrollbar">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th scope="col"> Channel Mechanics </th>
+                    <th scope="col">SalesForce</th>
+
+                    <th scope="col"> </th>
+                </tr>
+            </thead>
+            <tbody>
+
+
+
+                <tr>
+
+                    @* This is going to be a list of the Channel Mecahnics fields.  *@
+
+                    <td> TBR </td>
+
+                    @* This is going to be a list of the Saleforce Fields. This will be rendered dynamically from the dropdown list *@
+
+
+                    <td> TBR </td>
+
+                    @* This is going to be a dropdown of the salesforce fields. This will relate to the *@
+                <td>
+                    <select>
+
+                        <option>
+                            Something
+                        </option>
+                    </select>
+
+                </td>
+      
+                   
+
+                    @*<td> <div class="form-group pt-1"> @Html.DropDownList("FieldNamelist", ViewBag.fieldNameList as SelectList, "Please Select field", new { @class = "form-select mx-auto" }) </div> </td>*@
+
+                </tr>
+
+
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+
+        <script>
+            function getValue() {
+                var select = document.getElementById('FieldNamelist');
+                var option = select.options[select.selectedIndex];
+
+            }
+
+
+
+
+
+
+
+
+
+
+            function loadTable() {
+
+
+
+                var x = document.getElementById("myDIV");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
+
+        </script>
+
+
+    }
+
+

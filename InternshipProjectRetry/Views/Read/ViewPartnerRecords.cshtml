@@ -1,0 +1,153 @@
+﻿@model IEnumerable<InternshipProjectRetry.Models.PartnerAccount>
+
+<style>
+    .loginPage {
+    }
+
+    html {
+    }
+
+    body {
+        background-image: linear-gradient(140deg, #9d2c9e 0%, #f68084 100%);
+    }
+    .soqlBox {
+        width: 500px;
+    }
+
+    .textBox {
+        width: 100%;
+    }
+
+    .form-signin {
+        padding: 15px;
+    }
+
+    .box {
+        width: 40%;
+        max-width: 60%;
+    }
+
+    .roundy {
+        border-radius: 25px 25px 3px 3px;
+    }
+
+    .my-custom-scrollbar {
+        position: relative;
+        height: 60vh;
+        overflow: auto;
+        
+    }
+
+    .table-wrapper-scroll-y {
+        display: block;
+    }
+    .tableFixHead thead th {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        background-color: white;
+        box-shadow: 5px 10px;
+    }
+  
+</style>
+
+
+
+
+<div class="container-fluid  bg-white shadow-sm rounded">
+    <div class="row roundy text-center">
+
+        @*Fields Box*@
+
+
+        <div class="form-signin roundy mx-3 text-center">
+
+            <img class="form-signin mx-3 text-center" src="~/Content/Images/ChannelMechanicslogo.png" alt="" width="100" height="100">
+
+            <div class="table-responsive pe-5">
+
+
+                <table class="table tableFixHead p-2 table-bordered my-custom-scrollbar table-wrapper-scroll-y table-striped">
+                    <thead>
+
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CompanyName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.WebsiteURL)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Street)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.City)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.State)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Country)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PostalCode)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Currency)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.AccountManagerName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.AccountManagerEmail)
+                            </th>
+
+                        </tr>
+                    </thead>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CompanyName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.WebsiteURL)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Street)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.City)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.State)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Country)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PostalCode)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Currency)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AccountManagerName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AccountManagerEmail)
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+
+        </div>
+
+     
+        </div>
+
+    </div>
+
