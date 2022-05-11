@@ -31,16 +31,11 @@ namespace InternshipProjectRetry.DataMappers
 
              );
 
-            
-
             // Pull each Salesforce account object - 
 
             var salesForceData = SalesForceProcessor.LoadAccounts();
 
-
             // then insert it here
-
-
             var mapper = new Mapper(config);
 
             foreach (var account in salesForceData)

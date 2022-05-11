@@ -53,44 +53,12 @@
 <div class="container-fluid bg-light shadow-sm rounded-3">
     <div class="row text-center mx-auto p-3 justify-content-center align-items-center">
 
-
-        @*<div class="loginPage row box">*@
-
-
-            @*<div class="form-signin rounded container-fluid shadow-sm p-5 text-center">
-
-                <img class="me-3" src="~/Content/Images/Salesforceicon.png" alt="" width="100" height="100">
-
-
-                <h5 class="pt-3">Accounts Available to Query</h5>
-
-
-                <div class="form-group pt-1">
-                    @Html.DropDownList("AccountNamelist", ViewBag.accountNameList as SelectList, "Please Select Account", new { @class = "form-select mx-auto" })
-
-                </div>
-
-
-
-            </div>*@
-
-
-
-        @*</div>*@
-
-
-
         @*Fields Box*@
 
-
         <div class="form-signin col-lg-auto rounded box  mx-3  text-center">
-
             <img class="me-3" src="~/Content/Images/Salesforceicon.png" alt="" width="100" height="100">
 
-
             <h5 class="pt-3">Available fields:</h5>
-            @*<p class="lead ">@ViewBag.Message</p>*@
-
 
             <div id="myDIV">
                 <div class="form-group pt-1 table-wrapper-scroll-y my-custom-scrollbar">
@@ -113,8 +81,6 @@
 
                             }
 
-
-
                         </tbody>
                     </table>
                 </div>
@@ -123,9 +89,6 @@
 
 
         </div>
-
-
-
 
         @* Soql box *@
 
@@ -155,16 +118,9 @@
 
                 }
 
-
-
             </div>
-
         </div>
-
-
-
     </div>
-
 
 
     @section Scripts {
@@ -176,12 +132,6 @@
                 var option = select.options[select.selectedIndex];
 
             }
-
-
-
-
-
-
 
 
 

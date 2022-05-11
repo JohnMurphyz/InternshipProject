@@ -15,63 +15,12 @@ using System.Web.Services.Protocols;
 namespace InternshipProjectRetry.Controllers
 {
 
-
 	public class HomeController : Controller
 	{
-
-
-		SforceService binding = LoginController.GetSforceService();
-		LoginResult LoginResult = LoginController.GetLoginResult();
-
 		public ActionResult Index()
 		{
 			return View();
 		}
-
-
-
-
-
-
-        //public void Run()
-        //{
-        //	// Make a login call 
-        //	if (ConnectSFDC())
-        //	{
-
-        //		ClearDB();
-
-        //		QueryAccounts();
-
-        //		QueryFields();
-
-        //		DataMapper.dataMapper();
-
-
-
-
-        //	}
-        //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
 
 
 	}

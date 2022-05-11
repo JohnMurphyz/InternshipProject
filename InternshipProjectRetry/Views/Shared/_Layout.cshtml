@@ -32,7 +32,7 @@
 
                 <div class=" col-7">
 
-                    <ul class="navbar-nav ps-5 ms-5">
+                    <ul class="navbar-nav ps-3">
                         <li class="nav-item">
                             <div class="px-3">
                                 @Html.ActionLink("Home", "Index", "Home", null, new { @style = "text-decoration: none; color: black;" })
@@ -49,13 +49,19 @@
 
                         <li class="nav-item">
                             <div class="px-3 ">
-                                @Html.ActionLink("Imported records", "ViewPartnerRecords", "Read", null, new { @style = "text-decoration: none; color: black;" })
+                                @Html.ActionLink("Channel Mechanics records", "ViewPartnerRecords", "Read", null, new { @style = "text-decoration: none; color: black;" })
 
                             </div>
                         </li>
                         <li class="nav-item">
                             <div class="px-3 ">
                                 @Html.ActionLink("Scheduled Queries", "ViewScheduledQueries", "Read", null, new { @style = "text-decoration: none; color: black;" })
+
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div class="px-3 ">
+                                @Html.ActionLink("Imported Records", "ViewSoqlResults", "Read", null, new { @style = "text-decoration: none; color: black;" })
 
                             </div>
                         </li>

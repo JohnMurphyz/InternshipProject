@@ -24,12 +24,8 @@ namespace InternshipProjectRetry.Controllers
 			return RedirectToAction("Query", "Query", "Query");
 		}
 
-
-
-
 		public ActionResult ViewScheduledQueries()
 		{
-
 			var Queries = SalesForceProcessor.LoadScheduledQueries();
 
 			// Check if there's accounts to map
@@ -41,12 +37,7 @@ namespace InternshipProjectRetry.Controllers
 			return RedirectToAction("Query", "Query", "Query");
 		}
 
-
-
-
 		// I need a method to show previous queries - or perhaps I use them as the scheduler... I have one made in proccessor anyhow
-
-
 
 		public ActionResult ViewSoqlResults()
 		{
@@ -61,8 +52,6 @@ namespace InternshipProjectRetry.Controllers
 
 
 		}
-
-
 
 		}
 }

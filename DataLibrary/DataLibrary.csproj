@@ -290,6 +290,7 @@
     <Compile Include="BussinessLogic\SalesForceProcessor.cs" />
     <Compile Include="DataAccess\SQLDataAccess.cs" />
     <Compile Include="Models\FieldModel.cs" />
+    <Compile Include="Models\IdentityModel.cs" />
     <Compile Include="Models\PartnerAccount.cs" />
     <Compile Include="Models\QueryModel.cs" />
     <Compile Include="Models\SalesForceAccountModel.cs" />

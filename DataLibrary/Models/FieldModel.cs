@@ -10,11 +10,4 @@ namespace InternshipProjectRetry.Models
 
     }
 
-
-    public class FieldViewModel
-    {
-        public IList<FieldModel> FieldItems { get; set; }
-
-    }
-
 }

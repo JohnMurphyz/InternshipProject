@@ -17,12 +17,16 @@ namespace InternshipProjectRetry.Controllers
     public class QueryController : Controller
     {
         // GET: Query
-        public void LoadQueryPage()
+        public ActionResult LoadQueryPage()
         {
             ClearDB();
             QueryFields();
             QueryAccounts();
+            GetSOQLIds();
             DataMappers.DataMapper.dataMapper();
+
+            return RedirectToAction("Query");
+
         }
 
         SforceService binding = LoginController.GetSforceService();
@@ -31,25 +35,54 @@ namespace InternshipProjectRetry.Controllers
         List<DataLibrary.Models.QueryModel> queryModels;
 
 
-        // This is to clear the DB
-        public void ClearDB()
+            // This is to clear the DB
+            public void ClearDB()
         {
 
             SqlConnection con = new SqlConnection(SQLDataAccess.GetConnectionString());
             con.Open();
 
-            string sql = @"DELETE FROM SalesForceAccounts; DELETE FROM Fields; DELETE FROM CMTable;";
+            
+            // This is to get the unknown field tables inside SOQLTable
+
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("ALTER TABLE dbo.SOQLTable DROP COLUMN ");
+
+
+            var getColumns = @"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS where TABLE_NAME like 'SOQLTable'";
+
+            List<string> columns = SQLDataAccess.LoadData<string>(getColumns);
+
+            foreach(string col in columns)
+            {
+                if(col == columns[0])
+                {
+                    continue;
+                }
+
+                if (col == columns.Last())
+                {
+                    sb.Append(col);
+                } else
+
+                sb.Append(col + ", ");
+            }
+
+
+            //Clear all the other tables
+
+            string sql = @"DELETE FROM SalesForceAccounts; DELETE FROM Fields; DELETE FROM CMTable; DELETE FROM SOQLTable; DELETE FROM Queries; " + sb;
+
+
             SqlCommand cmd = new SqlCommand(sql, con);
             cmd.ExecuteNonQuery();
             con.Close();
 
         }
-
-
-        // These are hardcoded through a model into the DB because .NET doesn't like random data flying around
-
-        // This is to query the general fields required by CM
-        public void QueryAccounts()
+         
+            // This is to query the general fields required by CM
+            public void QueryAccounts()
         {
 
             QueryResult queryResults = binding.query("SELECT AccountNumber, Name, Website, BillingStreet, " +
@@ -70,11 +103,10 @@ namespace InternshipProjectRetry.Controllers
             else
             { System.Diagnostics.Debug.WriteLine("No Account found"); }
         }
-
-
-        // This is to get available fields for an object
-
-        public void QueryFields()
+         
+         
+            // This is to get available fields for an object
+            public void QueryFields()
         {
 
             try
@@ -107,52 +139,18 @@ namespace InternshipProjectRetry.Controllers
         }
 
 
-        // This is to load the available account names & Fields -- Requires QueryAccounts & QueryFields to be executed
-
-        public ActionResult Query()
-        {
+            public ActionResult Query()  {
 
             if (LoginController.getLoginStatus())
             {
-                LoadQueryPage();
-
-                var data = SalesForceProcessor.LoadAccounts();
-
-
                 var fielddata = SalesForceProcessor.LoadFields();
 
-
-                SelectList Accountlist = new SelectList(data, "AccountName", "AccountName");
-
-                ViewBag.accountNameList = Accountlist;
-
-
-
-                if (data.Count > 0)
-                {
-                    return View(fielddata);
-
-                }
-                else
-                {
-                    // I should pass a message here too
-
-                    return RedirectToAction("Login", "Login");
-
-                }
-
-
+                if (fielddata.Count > 0)  {return View(fielddata);}
+                else { return RedirectToAction("Login", "Login"); }
             }
-            else
-            {
-                return RedirectToAction("Login", "Login");
-            }
-
-
-
-        }
-
-
+            else { return RedirectToAction("Login", "Login"); }
+          
+              }
 
         //For scheduling most recent query from SOQL Box
 
@@ -167,8 +165,7 @@ namespace InternshipProjectRetry.Controllers
 
             SalesForceProcessor.CreateScheduledQuery(LastQuery, date);
 
-            return RedirectToAction("Query");
-
+            return RedirectToAction("ViewScheduledQueries", "Read");
         }
 
         //Defining a new query from scheduler
@@ -184,32 +181,78 @@ namespace InternshipProjectRetry.Controllers
 
             SalesForceProcessor.CreateScheduledQuery(NewQuery, date);
 
-            return RedirectToAction("Query");
+            return RedirectToAction("ViewScheduledQueries", "Read");
 
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public void AddToDatabase(FormCollection form)
+        public ActionResult AddToDatabase(FormCollection form)
         {
-
             // Obtains the previous Query, executes it and stores it in the database
 
             List<DataLibrary.Models.SavedQueryModel> querylist = SalesForceProcessor.LoadQueries();
 
             int count = querylist.Count;
 
-            var query = querylist[count - 1].Parameters;
-            
-            var modelList = GenericQuery(query);
+            var oldquery =  querylist[count - 1].Parameters;
+
+            // I need to Remove ID
+
+            oldquery.Replace("Id,", "").Replace("Id", "");
+
+            // And Reinsert ID, split up by commas and remove whitespace
+
+            string[] words = oldquery.Split(',', ' ');
+
+            StringBuilder sb = new StringBuilder();
+
+
+            sb.Append("Id,");
+
+            foreach (string word in words)
+            {
+                // make each word begin uppercase + add a comma + space on all except the last one and 
+
+                if (word == words.Last())
+                {
+                    sb.Append(ToUpperFirstLetter(word));
+                }
+                else
+                {
+                    sb.Append(ToUpperFirstLetter(word) + ",");
+                }
+            }
+
+
+
+            var modelList = GenericQuery(sb.ToString());
 
             SalesForceProcessor.CreateSOQLRecord(modelList);
 
+            return RedirectToAction("ViewSoqlResults", "Read");
 
         }
 
 
+        public void GetSOQLIds()
+        {
+           var querylist = GenericQuery("Id");
+
+            foreach (var query in querylist)
+            {
+                foreach(var item in query.FieldValueList)
+                {
+                    if(item == null) {continue; }
+
+                    SalesForceProcessor.CreateSOQLId(item.ToString());
+
+                }
+
+            }
+
+        }
 
 
         public static string ToUpperFirstLetter(string source)
@@ -244,8 +287,6 @@ namespace InternshipProjectRetry.Controllers
             {
                 return RedirectToAction("Query");
             }
-
-
 
             // split up by commas and remove whitespace
 
@@ -284,7 +325,6 @@ namespace InternshipProjectRetry.Controllers
             return View(model);
 
         }
-
 
 
         //Generic Query - Just taking a string, or a set of tokens delimited by commas

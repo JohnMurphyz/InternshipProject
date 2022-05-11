@@ -12,8 +12,6 @@ namespace InternshipProjectRetry.Controllers
 {
     public class LoginController : Controller
     {
-
-
         public static Boolean Loginstatus { get; set; }
 
         private static SforceService binding { get; set; }
@@ -60,9 +58,6 @@ namespace InternshipProjectRetry.Controllers
         }
 
 
-
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
 
@@ -99,28 +94,23 @@ namespace InternshipProjectRetry.Controllers
                 //Create a new session header object and set the session id to that returned by the login
                 binding.SessionHeaderValue = new SessionHeader();
                 binding.SessionHeaderValue.sessionId = LoginResult.sessionId;
-                
+
                 // create required sessions 
                 System.Diagnostics.Debug.WriteLine("Logged In");
                 Loginstatus = true;
-                return RedirectToAction("Query", "Query");
+
+                return RedirectToAction("LoadQueryPage", "Query");
 
             }
             else
                 System.Diagnostics.Debug.WriteLine("Not Logged In");
             Loginstatus = false;
             return View();
-         
+
         }
 
 
-        public ActionResult TempView()
-        {
-            return View();
-        }
-
-        public ActionResult logout()
-        {
+        public ActionResult logout() {
             try
             {
                 binding.logout();
@@ -138,8 +128,6 @@ namespace InternshipProjectRetry.Controllers
             }
 
         }
-
-
 
     }
 }

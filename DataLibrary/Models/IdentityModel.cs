@@ -6,15 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataLibrary.Models
 {
-
-
-    public class ScheduledQueryModel
+    public class IdentityModel
     {
-
-        public string Query { get; set; }
-
-        public DateTime ScheduledTime { get; set; }
-
+        public string AccountId { get; set; }
 
     }
 }

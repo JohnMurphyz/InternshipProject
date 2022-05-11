@@ -15,44 +15,85 @@
         height: 100%;
         background-image: linear-gradient(140deg, #9d2c9e 0%, #f68084 100%);
     }
-</style>
 
-<h2>ViewSoqlResults</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.FieldName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FieldValue)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FieldName)
-            </td>
-
-
-            <td>
-                @Html.DisplayFor(modelItem => item.FieldValue)
-
-            </td>
-
-
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
+    .scheduleBox {
+        min-height: 15%;
     }
 
-</table>
+    .inputs {
+        padding-bottom: 20px;
+        padding-top: 20px;
+        border-radius: 25px 25px 3px 3px;
+    }
+
+    .schedulePage {
+        max-width: 92.5%;
+    }
+
+    .top {
+        z-index: 1;
+    }
+</style>
+
+
+
+<div class="top text-centre pb-3 row ">
+    <h4 class="p-1 text-white text-end col-8">Would you like to execute another query?</h4>
+
+    <div class="col text-start rounded">
+
+        @using (Html.BeginForm("Query", "Query", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <input type="submit" value="Return to Query" class="btn text-center  pt-2" style="background-color: #9d2c9e; color: white">
+
+        }
+
+    </div>
+</div>
+
+<div class="container-fluid bg-white rounded-3 shadow-sm">
+
+    <div class=" text-center mx-auto ">
+
+        <div class="loginPage">
+
+            <div class=" pt-5 pe-5 ps-5 pb-3 row rounded text-center">
+
+                @foreach (var item in Model)
+                {
+
+                    <div class="col">
+                        <table class="table tableRender table-bordered table-striped">
+
+                            <tr>
+                                <th> @item.FieldName</th>
+                            </tr>
+
+
+                            @foreach (var value in item.FieldValueList)
+                            {
+                                if (value != null)
+                                {
+                                    <tr>
+
+                                        <td>@value.ToString()</td>
+                                    </tr>
+
+                                }
+                            }
+
+
+                        </table>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

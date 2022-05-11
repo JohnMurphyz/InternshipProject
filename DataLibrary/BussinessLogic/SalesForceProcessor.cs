@@ -153,13 +153,46 @@ namespace DataLibrary.BussinessLogic
 
 
 
+
+
+        public static int CreateSOQLId(string id)
+        {
+
+            IdentityModel identity = new IdentityModel
+            {
+                AccountId = id
+            };
+
+
+            System.Diagnostics.Debug.WriteLine("Insertng CREATESOQLID");
+
+            string sql = @"insert into dbo.SOQLTable (Id) values (@AccountId);";
+
+            return SQLDataAccess.SaveData(sql, identity);
+
+        }
+
+
         public static void CreateSOQLRecord(List<QueryModel> models)
         {
+            // obtain the Ids
+
+            var idList = models[0].FieldValueList;
+
+
             foreach (QueryModel model in models)
             {
+                var i = 0;
+
+                // Skip the Ids
+                if (model == models[0])
+                {
+                    continue;
+                }
+                
                 string FieldName = model.FieldName;
                 System.Diagnostics.Debug.WriteLine(FieldName);
-                string columnexists = "select " + FieldName + "from dbo.SOQLTable";
+                string columnexists = "select " + FieldName + " from dbo.SOQLTable";
 
                 if (SQLDataAccess.ExecuteSql(columnexists) == 0)
                 {
@@ -176,14 +209,10 @@ namespace DataLibrary.BussinessLogic
                             string FieldValue = field;
 
                             // I need to add an ID finder part here
+                            // This needs to be queried against SALESFORCE before using the value for inserting the data
 
-                            var ID = "Select Id from account WHERE " + FieldName + " = '" + FieldValue + "'";
-
-                            var identifier = SQLDataAccess.ExecuteSql(ID);
-
-
-
-                            string fieldsql = @"insert into dbo.SOQLTable (" + FieldName + ") VALUES ('" + FieldValue + " WHERE Id = " + identifier;
+                            string fieldsql = @"update dbo.SOQLTable SET " + FieldName + " = '" + FieldValue + "' WHERE Id = '" + idList[i] + "'";
+                            i++;
                             SQLDataAccess.SaveData(fieldsql, FieldValue);
 
 
@@ -197,12 +226,43 @@ namespace DataLibrary.BussinessLogic
             }
         }
 
+
+
+
+
         public static List<QueryModel> LoadSOQLResults()
         {
-            string sql = @"select Id from dbo.SOQLTable;";
 
-            return SQLDataAccess.LoadData<QueryModel>(sql);
+            var getColumns = @"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS where TABLE_NAME like 'SOQLTable'";
+
+            List<string> columns = SQLDataAccess.LoadData<string>(getColumns);
+
+            List<QueryModel> lists = new List<QueryModel>();
+
+            foreach(var column in columns)
+            {
+
+                List<string> data = SQLDataAccess.LoadData<string>("select " + column + " from dbo.SOQLTable");
+
+                QueryModel model = new QueryModel
+                {
+                    FieldName = column,
+                    FieldValueList = data
+
+                };
+
+                lists.Add(model);
+
+            }
+
+
+            return lists;
         }
+
+
+
+
+
 
 
 
